@@ -34,3 +34,5 @@ CReate table Quotes (
 );
 
 ALTER TABLE `Quotes` ADD CONSTRAINT `Quotes_Pet` FOREIGN KEY (`PetId`) REFERENCES `Pets`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT; ALTER TABLE `Quotes` ADD CONSTRAINT `Quotes_Vet` FOREIGN KEY (`VetId`) REFERENCES `Vets`(`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+
+insert into Vets (Names, Email, Address, Phone) VALUES ("Jose Armando Casas", "josearca@correo.com", "Colombia", "2157863"), ("Alham brito delgado", "alhambrito@correo.com", "Colombia", "314485"); 
