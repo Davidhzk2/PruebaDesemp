@@ -34,6 +34,8 @@ namespace PruebaDesemp.Controllers.Quotes
             }
         }
 
+       
+
 
         [HttpGet]
         [Route("api/quotes/{id}")]
@@ -51,6 +53,37 @@ namespace PruebaDesemp.Controllers.Quotes
             catch (Exception ex){
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + ex.Message);
+            }
+        }
+
+         [HttpGet]
+        [Route("api/quotes/{date}/date")]
+        public async Task<IActionResult> GetQuotesByDate(DateOnly date)
+        {
+
+            try{
+                var result = await _quotesRepository.GetQuotesByDate(date);
+                return Ok(result);
+            }
+            catch (Exception ex){
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error HEre!!: " + ex.Message);
+            }
+        }
+
+
+        [HttpGet]
+        [Route("api/quotes/{id}/vets")]
+        public async Task<IActionResult> GetQuotesByVet(int id)
+        {
+
+            try{
+                var result = await _quotesRepository.GetQuoteByVet(id);
+                return Ok(result);
+            }
+            catch (Exception ex){
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error HEre!!: " + ex.Message);
             }
         }
 

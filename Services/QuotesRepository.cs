@@ -33,6 +33,16 @@ namespace PruebaDesemp.Extensions
             return await _context.Quotes.FindAsync(id);
         }
 
+        public async  Task<IEnumerable<Quote>> GetQuoteByVet(int VetId)
+        {
+            return await _context.Quotes.Where(t => t.VetId == VetId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Quote>> GetQuotesByDate(DateOnly date)
+        {
+            return await _context.Quotes.Where(t => t.Date.ToString().Contains(date.ToString())).ToListAsync();
+        }
+
         public async Task<Quote> UpdateQuote(Quote quote)
         {   
 
