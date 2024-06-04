@@ -35,10 +35,21 @@ namespace PruebaDesemp.Services
 
         public async  Task<Pet> UpdatePet(Pet pet)
         {
-            var result = await _context.Pets.AddAsync(pet);
-            await _context.SaveChangesAsync();
+            var result = await _context.Pets.FindAsync(pet.Id);
 
-            return result.Entity;
+            if(result != null){
+
+                result.Name = pet.Name;
+                result.Specie = pet.Specie;
+                result.Race = pet.Race;
+                result.DateBirth = pet.DateBirth;
+                result.Photo = pet.Photo;
+                result.OwnerId = pet.OwnerId;
+
+                await _context.SaveChangesAsync();
+                return result;
+            }
+                return null;
         }
     }
 }
