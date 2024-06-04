@@ -1,5 +1,7 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using PruebaDesemp.Data;
+using PruebaDesemp.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,9 @@ builder.Services.AddDbContext<DataContext>(options => {
     Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.2-Mysql")
     );
 });
+
+//mapeo de interfaces y repositorios
+builder.Services.AddRepositories(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
