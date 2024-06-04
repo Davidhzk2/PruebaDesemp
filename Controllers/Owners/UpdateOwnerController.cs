@@ -9,21 +9,27 @@ using PruebaDesemp.Services;
 namespace PruebaDesemp.Controllers.Owners
 {
     
-    public class CreateOwnerController : ControllerBase
-    {
+    public class UpdateOwnerController : ControllerBase
+    {   
         private readonly IOwnersRepository _ownerRepository;
-        public CreateOwnerController(IOwnersRepository ownerRepository){
+        public UpdateOwnerController(IOwnersRepository ownerRepository){
             _ownerRepository = ownerRepository;
         }
-
-        [HttpPost]
-        [Route ("api/Owners")]
-        public async Task<IActionResult> CreateOwner([FromBody] Owner owner){
+        
+        [HttpPut]
+        [Route ("api/Owners/{id}")]
+        public async Task<IActionResult> CreateOwner(int id,[FromBody] Owner owner){
 
             if(!ModelState.IsValid)
                 return BadRequest("Some required field are empty!!");
             try
             {   
+                if(id != owner.Id)
+                    return BadRequest($"The ids doesn´t match !! {id} ");
+
+                var searId = await _ownerRepository.GetOwnerById(id);
+                if(searId  == null)
+                    return BadRequest($"Don´t exits a Ownwe with tha id {id}");
 
                 var searchEmail = await _ownerRepository.GetOwnerByEmail(owner.Email);
 
@@ -31,8 +37,8 @@ namespace PruebaDesemp.Controllers.Owners
                     return BadRequest("The Email is already Registred!!");
 
 
-                var result  = await _ownerRepository.CreateOwner(owner);
-                return CreatedAtAction(nameof(OwnersController.GetOwnerById), "Owners", new{id = result.Id}, new{status=201, message= "The Owner was created Successfully!",result});
+                var result  = await _ownerRepository.UpdateOwner(owner);
+                //return CreatedAtAction(nameof(OwnersController.GetOwnerById), "Owners", new{id = result.Id}, result);
                 return Ok(result);
             }
             catch (Exception ex)

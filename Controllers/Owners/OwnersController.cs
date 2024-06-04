@@ -3,29 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PruebaDesemp.Services;
 
 namespace PruebaDesemp.Controllers.Owners
 {
-    
+
     public class OwnersController : ControllerBase
     {
 
-        public OwnersController(){
-            
-        }
-        
-        [HttpGet]
-        [Route ("api/Owners")]
-        public async Task<IActionResult> GetAllOwners(){
-
-            return Ok();
+        private readonly IOwnersRepository _ownerRepository;
+        public OwnersController(IOwnersRepository ownerRepository)
+        {
+            _ownerRepository = ownerRepository;
         }
 
         [HttpGet]
-        [Route ("api/Owners/{id}")]
-        public async Task<IActionResult> GetOwnerById(int id){
+        [Route("api/Owners")]
+        public async Task<IActionResult> GetAllOwners()
+        {
 
-            return Ok();
+            try{
+                var result = await _ownerRepository.GetAllOwners();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Owners/{id}")]
+        public async Task<IActionResult> GetOwnerById(int id)
+        {
+
+            try{
+                var result = await _ownerRepository.GetOwnerById(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + ex.Message);
+            }
         }
     }
 }
