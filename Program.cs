@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Servicio de controladores 
+builder.Services.AddControllers();
+
 //conexion a la base de datos 
 builder.Services.AddDbContext<DataContext>(options => {
     options.UseMySql(builder.Configuration.GetConnectionString("MyConnection"),
@@ -25,7 +28,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.MapControllers();
 
 app.Run();
 
