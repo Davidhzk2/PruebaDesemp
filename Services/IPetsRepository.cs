@@ -9,6 +9,8 @@ namespace PruebaDesemp.Services
     public interface IPetsRepository
     {
         Task<IEnumerable<Pet>> GetAllPets();
+        Task<IEnumerable<Pet>> GetPetsByOwner(int OwnerId);
+        Task<IEnumerable<Pet>> GetPetsByBirthDate(string date);
         Task<Pet> GetPetById(int id);
         Task<Pet> CreatePet(Pet pet);
         Task<Pet> UpdatePet(Pet pet);

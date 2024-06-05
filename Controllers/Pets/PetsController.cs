@@ -18,16 +18,14 @@ namespace PruebaDesemp.Controllers.Owners
         }
 
         [HttpGet]
-        [Route("api/Pets")]
+        [Route("api/pets")]
         public async Task<IActionResult> GetAllPets()
         {
-            try
-            {
+            try{
                 var pets = await _petsRepository.GetAllPets();
                 return Ok(pets);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex){
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + ex.Message);
             }
@@ -35,16 +33,45 @@ namespace PruebaDesemp.Controllers.Owners
         }
 
         [HttpGet]
-        [Route("api/Pets/{id}")]
+        [Route("api/pets/{id}")]
         public async Task<IActionResult> GetPetById(int id)
         {
-            try
-            {
-                var pets = await _petsRepository.GetAllPets();
+            try {
+                var pets = await _petsRepository.GetPetById(id);
                 return Ok(pets);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + ex.Message);
+            }
+
+        }
+
+
+        [HttpGet]
+        [Route("api/pets/{id}/owner")]
+        public async Task<IActionResult> GetPetsByOwner(int id)
+        {
+            try{
+                var pets = await _petsRepository.GetPetsByOwner(id);
+                return Ok(pets);
+            }
+            catch (Exception ex){
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + ex.Message);
+            }
+
+        }
+
+        [HttpGet]
+        [Route("api/pets/{date}/birthdate")]
+        public async Task<IActionResult> GetPetsByBirthDate(string date)
+        {
+            try{
+                var pets = await _petsRepository.GetPetsByBirthDate(date);
+                return Ok(pets);
+            }
+            catch (Exception ex){
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + ex.Message);
             }

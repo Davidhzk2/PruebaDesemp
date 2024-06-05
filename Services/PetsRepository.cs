@@ -33,6 +33,16 @@ namespace PruebaDesemp.Services
             return  await _context.Pets.FindAsync(id);
         }
 
+        public async  Task<IEnumerable<Pet>> GetPetsByBirthDate(string date)
+        {
+             return  await _context.Pets.Where(t=> t.DateBirth.ToString().Contains(date)).ToListAsync();
+        }
+
+        public async  Task<IEnumerable<Pet>> GetPetsByOwner(int OwnerId)
+        {
+            return  await _context.Pets.Where(t=> t.OwnerId == OwnerId).ToListAsync();
+        }
+
         public async  Task<Pet> UpdatePet(Pet pet)
         {
             var result = await _context.Pets.FindAsync(pet.Id);
