@@ -38,9 +38,9 @@ namespace PruebaDesemp.Extensions
             return await _context.Quotes.Where(t => t.VetId == VetId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Quote>> GetQuotesByDate(DateOnly date)
+        public async Task<IEnumerable<Quote>> GetQuotesByDate(string date)
         {
-            return await _context.Quotes.Where(t => t.Date.ToString().Contains(date.ToString())).ToListAsync();
+            return await _context.Quotes.Where(t => t.Date.ToString().Contains(date)).ToListAsync();
         }
 
         public async Task<Quote> UpdateQuote(Quote quote)

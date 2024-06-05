@@ -40,7 +40,8 @@ namespace PruebaDesemp.Services
 
         public async  Task<IEnumerable<Pet>> GetPetsByOwner(int OwnerId)
         {
-            return  await _context.Pets.Where(t=> t.OwnerId == OwnerId).ToListAsync();
+            return  await _context.Pets.Where(t => t.OwnerId == OwnerId)
+                .ToListAsync();
         }
 
         public async  Task<Pet> UpdatePet(Pet pet)
