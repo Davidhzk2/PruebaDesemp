@@ -18,7 +18,7 @@ namespace PruebaDesemp.Controllers.Owners
         }
 
         [HttpGet]
-        [Route("api/Owners")]
+        [Route("api/owners")]
         public async Task<IActionResult> GetAllOwners()
         {
 
@@ -33,7 +33,7 @@ namespace PruebaDesemp.Controllers.Owners
         }
 
         [HttpGet]
-        [Route("api/Owners/{id}")]
+        [Route("api/owners/{id}")]
         public async Task<IActionResult> GetOwnerById(int id)
         {
 

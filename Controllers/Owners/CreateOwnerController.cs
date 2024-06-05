@@ -17,11 +17,11 @@ namespace PruebaDesemp.Controllers.Owners
         }
 
         [HttpPost]
-        [Route ("api/Owners")]
+        [Route ("api/owners")]
         public async Task<IActionResult> CreateOwner([FromBody] Owner owner){
 
             if(!ModelState.IsValid)
-                return BadRequest("Some required field are empty!!");
+                return BadRequest("Some required fields are empty!!");
             try
             {   
 
@@ -32,8 +32,7 @@ namespace PruebaDesemp.Controllers.Owners
 
 
                 var result  = await _ownerRepository.CreateOwner(owner);
-                return CreatedAtAction(nameof(OwnersController.GetOwnerById), "Owners", new{id = result.Id}, new{status=201, message= "The Owner was created Successfully!",result});
-                return Ok(result);
+                return CreatedAtAction(nameof(OwnersController.GetOwnerById), "Owners", new{id = result.Id}, new{status=201, message= "The Owner was created successfully!",result});
             }
             catch (Exception ex)
             {

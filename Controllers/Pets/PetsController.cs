@@ -37,8 +37,11 @@ namespace PruebaDesemp.Controllers.Owners
         public async Task<IActionResult> GetPetById(int id)
         {
             try {
-                var pets = await _petsRepository.GetPetById(id);
-                return Ok(pets);
+                var pet = await _petsRepository.GetPetById(id);
+                if(pet == null)
+                return BadRequest($"There is not a pet with that Id {id}");
+
+                return Ok(pet);
             }
             catch (Exception ex) {
 

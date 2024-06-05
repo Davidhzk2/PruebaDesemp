@@ -19,6 +19,7 @@ namespace PruebaDesemp.Models
     public DateTime DateBirth {get; set;}
     [Required]
     public string Photo {get; set;}
+    [Required]
     public int OwnerId {get; set;}
     }
 }

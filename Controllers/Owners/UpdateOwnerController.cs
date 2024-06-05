@@ -17,19 +17,19 @@ namespace PruebaDesemp.Controllers.Owners
         }
         
         [HttpPut]
-        [Route ("api/Owners/{id}")]
+        [Route ("api/owners/{id}")]
         public async Task<IActionResult> CreateOwner(int id,[FromBody] Owner owner){
 
             if(!ModelState.IsValid)
-                return BadRequest("Some required field are empty!!");
+                return BadRequest("Some required fields are empty!!");
             try
             {   
                 if(id != owner.Id)
-                    return BadRequest($"The ids doesn´t match !! {id} ");
+                    return BadRequest($"The ids doesn't match !! {id} ");
 
                 var searId = await _ownerRepository.GetOwnerById(id);
                 if(searId  == null)
-                    return BadRequest($"Don´t exits a Ownwe with tha id {id}");
+                    return BadRequest($"Don't exits a Ownwer with that id {id}");
 
                 var searchEmail = await _ownerRepository.GetOwnerByEmail(owner.Email);
 
@@ -38,8 +38,7 @@ namespace PruebaDesemp.Controllers.Owners
 
 
                 var result  = await _ownerRepository.UpdateOwner(owner);
-                //return CreatedAtAction(nameof(OwnersController.GetOwnerById), "Owners", new{id = result.Id}, result);
-                return Ok(result);
+                return CreatedAtAction(nameof(OwnersController.GetOwnerById), "Owners", new{id = result.Id}, result);
             }
             catch (Exception ex)
             {

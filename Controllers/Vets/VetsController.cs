@@ -17,30 +17,30 @@ namespace PruebaDesemp.Controllers.Vets
         }
 
         [HttpGet]
-        [Route("api/Vets")]
+        [Route("api/vets")]
         public async Task<IActionResult> GetAllVets()
         {
 
             try{
                 var result = await _vetsRepository.GetAllVets();
                 return Ok(result);
-            }
-            catch (Exception ex){
+            }catch (Exception ex){
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + ex.Message);
             }
         }
 
         [HttpGet]
-        [Route("api/Vets/{id}")]
+        [Route("api/vets/{id}")]
         public async Task<IActionResult> GetVetById(int id)
         {
-
             try{
                 var result = await _vetsRepository.GetVetById(id);
+                if(result == null )
+                    return BadRequest($"There is not a vet with thar Id {id}");
+
                 return Ok(result);
-            }
-            catch (Exception ex){
+            }catch (Exception ex){
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error: " + ex.Message);
             }

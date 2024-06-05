@@ -13,31 +13,36 @@ namespace PruebaDesemp.Controllers.Owners
     {
 
         private readonly IPetsRepository _petsRepository;
-        public CreatePetController(IPetsRepository petsRepository)
+        private readonly IOwnersRepository _ownersRepository;
+        public CreatePetController(IPetsRepository petsRepository,IOwnersRepository ownersRepository )
         {
 
             _petsRepository = petsRepository;
+            _ownersRepository = ownersRepository;
         }
 
         
         [HttpPost]
-        [Route ("api/Pets")]
+        [Route ("api/pets")]
         public async Task<IActionResult> CreatePet([FromBody] Pet pet){
 
             if(!ModelState.IsValid)
-                return BadRequest("Some data is incomplet");
-
+                return BadRequest("Some required fields are empty!!");
 
             try
-            {   
+            {  
+                var searchOwnerId = await _ownersRepository.GetOwnerById(pet.OwnerId);
+                if(searchOwnerId == null)
+                    return BadRequest($"There is not a Owner with that id {pet.OwnerId}");
+                 
                 var petResult = await _petsRepository.CreatePet(pet);
-                return Ok(petResult);
-                //return CreatedAtAction(nameof("GetPetById"), "Pets", new {id = petResult.Id} , petResult);
+                return CreatedAtAction(nameof(PetsController.GetPetById), "Pets", new {id = petResult.Id} , new{status=201, message= "The Pet was created successfully!",petResult});
+                //return Ok(petResult);
                 
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro: "+ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error: "+ex.Message);
                 throw;  
             }
         }
