@@ -1,7 +1,9 @@
 using System.Reflection;
+using MailerSend.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using PruebaDesemp.Data;
 using PruebaDesemp.Extensions;
+using PruebaDesemp.Services.MailerSend;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,14 @@ builder.Services.AddDbContext<DataContext>(options => {
 
 //mapeo de interfaces y repositorios
 builder.Services.AddRepositories(Assembly.GetExecutingAssembly());
+
+
+//Envio de correos 
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+//Servicios del mailerSend
+builder.Services.AddHttpClient<IEmailService, EmailService>();
+builder.Services.Configure<MailerSendOptions>(builder.Configuration.GetSection("MailerSend"));
 
 var app = builder.Build();
 

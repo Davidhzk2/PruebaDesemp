@@ -58,7 +58,7 @@ namespace PruebaDesemp.Controllers.Quotes
 
          [HttpGet]
         [Route("api/quotes/{date}/date")]
-        public async Task<IActionResult> GetQuotesByDate(DateOnly date)
+        public async Task<IActionResult> GetQuotesByDate(string date)
         {
 
             try{
